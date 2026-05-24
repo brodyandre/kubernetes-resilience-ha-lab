@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-container-app
+  namespace: resilience-hpa
+  labels:
+    app: hpa-container-app
+    module: hpa-container-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpa-container-app
+      module: hpa-container-metrics
+  template:
+    metadata:
+      labels:
+        app: hpa-container-app
+        module: hpa-container-metrics
+    spec:
+      containers:
+        - name: application
+          image: registry.k8s.io/hpa-example
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 250m
+              memory: 128Mi
+            limits:
+              cpu: 600m
+              memory: 256Mi
+        - name: sidecar
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - while true; do sleep 30; done
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

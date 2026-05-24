@@ -1,0 +1,40 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+*.bak
+tmp/
+temp/
+
+# Env and secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+
+# Kubernetes local artifacts
+kubeconfig
+*.kubeconfig
+.kube/
+
+# Tooling caches
+node_modules/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.terraform/
+
+# Evidence runtime noise
+evidence/raw/

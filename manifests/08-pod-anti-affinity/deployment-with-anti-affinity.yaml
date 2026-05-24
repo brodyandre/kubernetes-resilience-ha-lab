@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-anti-affinity
+  namespace: resilience-scheduling
+  labels:
+    app: app-with-anti-affinity
+    module: pod-anti-affinity
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: app-with-anti-affinity
+      module: pod-anti-affinity
+  template:
+    metadata:
+      labels:
+        app: app-with-anti-affinity
+        module: pod-anti-affinity
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - app-with-anti-affinity
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

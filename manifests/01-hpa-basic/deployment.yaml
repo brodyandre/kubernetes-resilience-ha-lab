@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-basic-app
+  namespace: resilience-hpa
+  labels:
+    app: hpa-basic-app
+    module: hpa-basic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpa-basic-app
+      module: hpa-basic
+  template:
+    metadata:
+      labels:
+        app: hpa-basic-app
+        module: hpa-basic
+    spec:
+      containers:
+        - name: hpa-basic-app
+          image: registry.k8s.io/hpa-example
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

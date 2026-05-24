@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-near-cache
+  namespace: resilience-scheduling
+  labels:
+    app: app-near-cache
+    module: pod-affinity
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-near-cache
+      module: pod-affinity
+  template:
+    metadata:
+      labels:
+        app: app-near-cache
+        module: pod-affinity
+    spec:
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - cache-service
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

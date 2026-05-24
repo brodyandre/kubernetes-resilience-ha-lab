@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preferred-affinity-app
+  namespace: resilience-scheduling
+  labels:
+    app: preferred-affinity-app
+    module: node-affinity-preferred
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: preferred-affinity-app
+      module: node-affinity-preferred
+  template:
+    metadata:
+      labels:
+        app: preferred-affinity-app
+        module: node-affinity-preferred
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 80
+              preference:
+                matchExpressions:
+                  - key: zone
+                    operator: In
+                    values:
+                      - preferred
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

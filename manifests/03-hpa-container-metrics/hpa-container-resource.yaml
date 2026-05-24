@@ -1,0 +1,23 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-container-app
+  namespace: resilience-hpa
+  labels:
+    app: hpa-container-app
+    module: hpa-container-metrics
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hpa-container-app
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: ContainerResource
+      containerResource:
+        name: cpu
+        container: application
+        target:
+          type: Utilization
+          averageUtilization: 60

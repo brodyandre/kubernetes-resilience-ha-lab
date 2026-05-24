@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distribution-basic
+  namespace: resilience-scheduling
+  labels:
+    app: distribution-basic
+    module: pod-distribution
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: distribution-basic
+      module: pod-distribution
+  template:
+    metadata:
+      labels:
+        app: distribution-basic
+        module: pod-distribution
+    spec:
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

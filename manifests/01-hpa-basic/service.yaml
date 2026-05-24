@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hpa-basic-app
+  namespace: resilience-hpa
+  labels:
+    app: hpa-basic-app
+    module: hpa-basic
+spec:
+  type: ClusterIP
+  selector:
+    app: hpa-basic-app
+    module: hpa-basic
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-selector-app
+  namespace: resilience-scheduling
+  labels:
+    app: node-selector-app
+    module: node-selector
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-selector-app
+      module: node-selector
+  template:
+    metadata:
+      labels:
+        app: node-selector-app
+        module: node-selector
+    spec:
+      nodeSelector:
+        workload: resilience
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: default-scheduling-app
+  namespace: resilience-scheduling
+  labels:
+    app: default-scheduling-app
+    module: scheduler-default-behavior
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: default-scheduling-app
+      module: scheduler-default-behavior
+  template:
+    metadata:
+      labels:
+        app: default-scheduling-app
+        module: scheduler-default-behavior
+    spec:
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

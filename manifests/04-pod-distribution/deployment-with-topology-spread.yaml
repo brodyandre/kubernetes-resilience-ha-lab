@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distribution-topology-spread
+  namespace: resilience-scheduling
+  labels:
+    app: distribution-topology-spread
+    module: pod-distribution
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: distribution-topology-spread
+      module: pod-distribution
+  template:
+    metadata:
+      labels:
+        app: distribution-topology-spread
+        module: pod-distribution
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: distribution-topology-spread
+              module: pod-distribution
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

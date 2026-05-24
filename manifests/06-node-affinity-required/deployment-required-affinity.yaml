@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: required-affinity-app
+  namespace: resilience-scheduling
+  labels:
+    app: required-affinity-app
+    module: node-affinity-required
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: required-affinity-app
+      module: node-affinity-required
+  template:
+    metadata:
+      labels:
+        app: required-affinity-app
+        module: node-affinity-required
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: disk
+                    operator: In
+                    values:
+                      - ssd
+      containers:
+        - name: app
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

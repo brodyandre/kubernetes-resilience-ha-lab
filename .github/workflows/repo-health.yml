@@ -1,0 +1,49 @@
+name: Repo Health
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  structure-and-doc-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_paths=(
+            "README.md"
+            "AGENTS.md"
+            "LICENSE"
+            ".gitignore"
+            "docs"
+            "manifests"
+            "scripts"
+            "evidence"
+            "diagrams"
+            ".github/workflows"
+          )
+
+          missing=0
+          for path in "${required_paths[@]}"; do
+            if [ ! -e "$path" ]; then
+              echo "Missing required path: $path"
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Validate evidence guidance
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -qi "Nao crie evidencias falsas" evidence/README.md
+          grep -qi "Nao simule resultados" evidence/README.md
