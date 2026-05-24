@@ -29,7 +29,7 @@ Mais do que reunir manifests, a proposta aqui é transformar estudo técnico em 
 - [Como validar os resultados](#como-validar-os-resultados)
 - [Evidências e qualidade](#evidências-e-qualidade)
 - [Troubleshooting](#troubleshooting)
-- [Por que este projeto é relevante para recrutadores?](#por-que-este-projeto-é-relevante-para-recrutadores)
+- [Valor Profissional do Projeto](#por-que-este-projeto-é-relevante-para-recrutadores)
 - [Como este projeto se conecta com ambientes reais](#como-este-projeto-se-conecta-com-ambientes-reais)
 - [Próximos passos](#próximos-passos)
 - [Autor](#autor)
