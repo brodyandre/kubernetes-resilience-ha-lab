@@ -13,6 +13,12 @@ Somente salve outputs reais coletados apos executar os modulos.
 1. Logs e outputs reais em arquivos `.txt` dentro de `evidence/logs/`.
 2. Screenshots (opcional) dentro de `evidence/screenshots/`.
 
+Para regenerar os screenshots usados no `README.md`, execute:
+
+```bash
+./scripts/generate-readme-screenshots.sh
+```
+
 ## Estrutura recomendada
 
 ```text

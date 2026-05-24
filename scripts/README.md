@@ -11,6 +11,8 @@ Automacoes de suporte para o laboratorio.
 - `check-all.sh`: valida recursos Kubernetes, labels, taints e eventos.
 - `cleanup-all.sh`: remove recursos do laboratorio e preserva o cluster por padrao.
 - `capture-evidence.sh`: gera `.txt` reais de evidencias em `evidence/logs/`.
+- `generate-readme-screenshots.sh`: gera os PNGs usados no `README.md` a partir das saidas reais do cluster.
+- `render-terminal-screenshot.py`: renderiza capturas estilo terminal em PNG para o fluxo de evidencias visuais.
 - `run-hpa-load-test.sh`: aplica modulo 02 e inicia carga para validar scale up/down.
 - `watch-hpa.sh`: observa HPA e Pods em tempo real no namespace `resilience-hpa`.
 - `label-nodes-for-node-selector.sh`: identifica um worker e aplica `workload=resilience`.

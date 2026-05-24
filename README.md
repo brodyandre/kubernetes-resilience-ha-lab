@@ -245,6 +245,7 @@ Scripts disponiveis em `scripts/`:
 | `check-all.sh` | Verifica pods, deployments, services, HPA, labels, taints e eventos | Validacao tecnica dos resultados |
 | `cleanup-all.sh` | Remove recursos do laboratorio sem apagar cluster automaticamente | Reset seguro do ambiente |
 | `capture-evidence.sh` | Captura saidas reais do `kubectl` em `.txt` dentro de `evidence/logs` | Coleta de evidencias para documentacao |
+| `generate-readme-screenshots.sh` | Regera screenshots PNG do README com saidas reais do cluster | Atualizacao visual do portifolio |
 
 `check-all.sh`, `capture-evidence.sh` e `cleanup-all.sh` consideram por padrao os namespaces `resilience-hpa` e `resilience-scheduling`.
 
@@ -274,6 +275,10 @@ chmod +x scripts/*.sh
 ./scripts/check-cluster.sh
 ```
 
+Cluster pronto e saudavel no ambiente local:
+
+![Cluster k3d do laboratorio com 3 agents e 1 control-plane](evidence/screenshots/01-cluster-nodes.png)
+
 5. Aplicar todos os manifests do laboratorio.
 
 ```bash
@@ -291,6 +296,10 @@ chmod +x scripts/*.sh
 ```bash
 ./scripts/capture-evidence.sh
 ```
+
+Metrics Server ativo e alimentando telemetria para os modulos de HPA:
+
+![Metricas reais do cluster para suporte ao HPA](evidence/screenshots/02-metrics-top-nodes.png)
 
 8. Limpar recursos do laboratorio (cluster preservado por padrao).
 
@@ -327,17 +336,53 @@ Pontos de verificacao:
 - anti-affinity evita concentracao de replicas no mesmo node
 - taints bloqueiam agendamento sem toleration correspondente
 
+### Autoscaling horizontal
+
+Estado base dos HPAs aplicados no namespace `resilience-hpa`:
+
+![Visao geral dos HPAs do laboratorio](evidence/screenshots/03-hpa-basic-overview.png)
+
+Momento real de scale-up no modulo de carga continua, com aumento de replicas no `hpa-scale-app`:
+
+![Scale-up real do HPA com carga aplicada](evidence/screenshots/04-hpa-scale-up.png)
+
+Exemplo de HPA com `ContainerResource`, mostrando a metrica isolada no container principal da aplicacao:
+
+![HPA baseado em metrica por container](evidence/screenshots/05-hpa-container-resource.png)
+
+### Scheduling e distribuicao
+
+Distribuicao de pods no modulo de `topologySpreadConstraints` e distribuicao basica:
+
+![Distribuicao de pods entre nodes](evidence/screenshots/06-pod-distribution-wide.png)
+
+Labels aplicadas nos nodes para direcionar `nodeSelector`, `nodeAffinity` e o cenario de node dedicado:
+
+![Labels de nodes usadas pelos modulos de scheduling](evidence/screenshots/07-node-labels.png)
+
+Pods direcionados corretamente por `nodeSelector`, `requiredDuringSchedulingIgnoredDuringExecution` e `preferredDuringSchedulingIgnoredDuringExecution`:
+
+![Pods posicionados por nodeSelector e nodeAffinity](evidence/screenshots/08-node-selector-and-node-affinity.png)
+
+Comportamento de `podAffinity` e `podAntiAffinity` observado no cluster real:
+
+![Pods influenciados por podAffinity e podAntiAffinity](evidence/screenshots/09-pod-affinity-and-anti-affinity.png)
+
+Validação de `taints` e `tolerations`, com um pod agendado no node dedicado e outro bloqueado por `untolerated taint`:
+
+![Evidencia real de taints e tolerations](evidence/screenshots/10-taints-and-tolerations.png)
+
 [Voltar ao índice](#indice)
 
 ## Evidências e qualidade
 
-Este laboratorio foi pensado para ser publicado com evidencias reais e verificaveis. Para manter a documentacao coerente com o conteudo tecnico do repositorio, as imagens embutidas no `README` devem refletir exclusivamente os cenarios de HPA, scheduling, affinity, taints e tolerations descritos neste projeto.
+Este laboratorio foi pensado para ser publicado com evidencias reais e verificaveis. As imagens deste `README` foram regeneradas a partir de saidas reais do cluster `k3d-resilience-ha-lab`, com foco nos cenarios efetivamente implementados neste repositorio: HPA, distribuicao de pods, `nodeSelector`, affinities, `taints` e `tolerations`.
 
-No estado atual, a evidencia visual validada e aderente ao repositorio e a execucao bem-sucedida do pipeline de qualidade no GitHub Actions:
+O pipeline de qualidade no GitHub Actions complementa essas evidencias de execucao com validacao continua de YAML e scripts shell:
 
 ### Validação contínua no GitHub Actions
 
-![Execucao bem-sucedida do workflow Validate Kubernetes YAML](evidence/screenshots/10-github-actions-yaml-validation.png)
+![Execucao bem-sucedida do workflow Validate Kubernetes YAML](evidence/screenshots/11-github-actions-yaml-validation.png)
 
 Esse print confirma:
 
