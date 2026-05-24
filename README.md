@@ -29,7 +29,7 @@ Mais do que reunir manifests, a proposta aqui é transformar estudo técnico em 
 - [Como validar os resultados](#como-validar-os-resultados)
 - [Evidências e qualidade](#evidências-e-qualidade)
 - [Troubleshooting](#troubleshooting)
-- [Valor Profissional do Projeto](#por-que-este-projeto-é-relevante-para-recrutadores)
+- [Valor Profissional do Projeto](#valor-profissional-do-projeto)
 - [Como este projeto se conecta com ambientes reais](#como-este-projeto-se-conecta-com-ambientes-reais)
 - [Próximos passos](#próximos-passos)
 - [Autor](#autor)
@@ -439,7 +439,7 @@ kubectl describe pod <nome-do-pod> -n <namespace>
 
 [Voltar ao índice](#indice)
 
-## Por que este projeto é relevante para recrutadores?
+## Valor Profissional do Projeto
 
 Mais do que listar conceitos de Kubernetes, este laboratório comunica maturidade de execução. Ele mostra alguém que não apenas conhece os objetos da plataforma, mas consegue organizar um ambiente de teste coerente, criar cenários comparáveis, observar comportamento real do cluster e transformar isso em evidência técnica legível.
 
