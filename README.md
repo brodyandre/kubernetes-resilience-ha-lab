@@ -32,46 +32,46 @@ _Laboratório prático de autoscaling, scheduling avançado e controle de distri
 
 ## Visão geral
 
-Este repositorio foi estruturado como laboratorio pratico para estudar e demonstrar resiliencia e alta disponibilidade em Kubernetes com foco em:
+Este repositório foi estruturado como laboratório prático para estudar e demonstrar resiliência e alta disponibilidade em Kubernetes com foco em:
 
-- autoscaling horizontal orientado a metricas
-- comportamento do scheduler em cenarios reais
-- distribuicao inteligente de Pods entre nodes
-- boas praticas de operacao e validacao com `kubectl`
+- autoscaling horizontal orientado a métricas
+- comportamento do scheduler em cenários reais
+- distribuição inteligente de Pods entre nodes
+- boas práticas de operação e validação com `kubectl`
 
-O objetivo e transformar estudo tecnico em projeto de portifolio com rastreabilidade, evidencias reais e documentacao profissional.
+O objetivo é transformar estudo técnico em projeto de portfólio com rastreabilidade, evidências reais e documentação profissional.
 
 [Voltar ao índice](#indice)
 
 ## Problema que este laboratório resolve
 
-Em muitos ambientes, aplicacoes falham nao por falta de containers, mas por:
+Em muitos ambientes, aplicações falham não por falta de containers, mas por:
 
-- distribuicao inadequada de cargas entre nodes
-- configuracao incompleta de escalabilidade
-- ausencia de regras explicitas de agendamento
-- baixa observabilidade para diagnostico rapido
+- distribuição inadequada de cargas entre nodes
+- configuração incompleta de escalabilidade
+- ausência de regras explícitas de agendamento
+- baixa observabilidade para diagnóstico rápido
 
-Este laboratorio resolve esse gap com cenarios praticos reproduziveis que mostram como projetar workloads mais resilientes desde o ambiente de estudo.
+Este laboratório resolve esse gap com cenários práticos reproduzíveis que mostram como projetar workloads mais resilientes desde o ambiente de estudo.
 
 [Voltar ao índice](#indice)
 
 ## Habilidades demonstradas
 
 - modelagem de workloads com foco em disponibilidade
-- configuracao de HPA com cenarios de scale up e scale down
-- uso de metricas por container para decisao de escala
-- uso avancado de HPA com `ContainerResource` para isolar metrica do container principal
-- aplicacao de `nodeSelector`, affinity e anti-affinity
+- configuração de HPA com cenários de scale up e scale down
+- uso de métricas por container para decisão de escala
+- uso avançado de HPA com `ContainerResource` para isolar a métrica do container principal
+- aplicação de `nodeSelector`, affinity e anti-affinity
 - controle de agendamento com taints e tolerations
-- validacao tecnica com comandos `kubectl`
-- organizacao de evidencias e documentacao orientada a times tecnicos e nao tecnicos
+- validação técnica com comandos `kubectl`
+- organização de evidências e documentação orientada a times técnicos e não técnicos
 
 [Voltar ao índice](#indice)
 
 ## Arquitetura do laboratório
 
-Arquitetura base esperada para execucao local:
+Arquitetura base esperada para execução local:
 
 ```text
 Windows 11 + VS Code
@@ -85,16 +85,16 @@ Windows 11 + VS Code
   kubectl + manifests + scripts
 ```
 
-Modelo de distribuicao:
+Modelo de distribuição:
 
 - 1 node de controle (ou equivalente gerenciado pelo runtime local)
-- 2 ou mais nodes de trabalho para testar regras de distribuicao e afinidade
+- 2 ou mais nodes de trabalho para testar regras de distribuição e afinidade
 
 [Voltar ao índice](#indice)
 
 ## Diagramas do laboratório
 
-Arquivos fonte em `diagrams/`:
+Arquivos-fonte em `diagrams/`:
 
 - `diagrams/hpa-flow.md`
 - `diagrams/scheduling-flow.md`
@@ -105,12 +105,12 @@ Arquivos fonte em `diagrams/`:
 
 ```mermaid
 flowchart LR
-  U[Usuario gera carga] --> S[Service]
-  S --> P[Pods da aplicacao]
+  U[Usuário gera carga] --> S[Service]
+  S --> P[Pods da aplicação]
   P --> M[Metrics Server]
   M --> H[HPA]
   H --> D[Deployment]
-  D --> R[Novas replicas]
+  D --> R[Novas réplicas]
   R --> S
 ```
 
@@ -119,7 +119,7 @@ flowchart LR
 ```mermaid
 flowchart LR
   P[Pod criado] --> K[Kubernetes Scheduler]
-  K --> R[Recursos disponiveis]
+  K --> R[Recursos disponíveis]
   K --> L[Labels e seletores]
   K --> A[Affinity e anti-affinity]
   K --> T[Taints e tolerations]
@@ -136,7 +136,7 @@ flowchart TD
   N[Node com taint<br/>dedicated=resilience:NoSchedule]
   P1[Pod sem toleration]
   P2[Pod com toleration]
-  X[Pod nao agenda<br/>Pending]
+  X[Pod não agenda<br/>Pending]
   S[Scheduler]
   OK[Pod pode agendar]
 
@@ -150,17 +150,17 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  U[Usuarios/Clientes] --> SVC[Service]
-  SVC --> PODS[Pods da aplicacao]
+  U[Usuários/Clientes] --> SVC[Service]
+  SVC --> PODS[Pods da aplicação]
   PODS --> MS[Metrics Server]
   MS --> HPA[Horizontal Pod Autoscaler]
   HPA --> DEP[Deployment]
   DEP --> PODS
 
-  subgraph POLICIES[Politicas de agendamento]
+  subgraph POLICIES[Políticas de agendamento]
     AA[Pod Anti-Affinity]
     TOL[Tolerations]
-    SPD[Distribuicao de Pods]
+    SPD[Distribuição de Pods]
   end
 
   POLICIES --> SCH[Scheduler]
@@ -176,19 +176,19 @@ flowchart LR
 
 ## Tópicos abordados
 
-| Topico de estudo | Modulo pratico sugerido | Resultado principal esperado |
+| Tópico de estudo | Módulo prático sugerido | Resultado principal esperado |
 |---|---|---|
-| HPA Introdução | [manifests/01-hpa-basic](manifests/01-hpa-basic/README.md) | Entender alvo de CPU/memoria e comportamento basico do HPA |
-| HPA Primeiro Exemplo | [manifests/01-hpa-basic](manifests/01-hpa-basic/README.md) | Primeiro cenario pratico de HPA com CPU |
-| HPA Scale Up e Scale Down | [manifests/02-hpa-scale-up-down](manifests/02-hpa-scale-up-down/README.md) | Escala horizontal crescente e reducao controlada |
-| HPA Métricas por container | [manifests/03-hpa-container-metrics](manifests/03-hpa-container-metrics/README.md) | Recurso avancado: escala baseada apenas no container alvo |
-| Distribuicao dos Pods | [manifests/04-pod-distribution](manifests/04-pod-distribution/README.md) | Pods distribuindo de forma previsivel entre nodes |
-| `nodeSelector` | [manifests/05-node-selector](manifests/05-node-selector/README.md) | Fixacao de Pods em nodes com labels alvo |
-| Labels em Nodes | [manifests/05-node-selector](manifests/05-node-selector/README.md) | Organizacao de capacidade por rotulos para agendamento |
-| Node Affinity | [required](manifests/06-node-affinity-required/README.md) e [preferred](manifests/07-node-affinity-preferred/README.md) | Regras obrigatorias e preferenciais para direcionamento de Pods |
-| Pod Affinity | [manifests/09-pod-affinity](manifests/09-pod-affinity/README.md) | Co-localizacao intencional entre workloads |
-| Pod Anti Affinity | [manifests/08-pod-anti-affinity](manifests/08-pod-anti-affinity/README.md) | Separacao de replicas para reduzir risco de falha conjunta |
-| Taints e Tolerations | [manifests/10-taints-tolerations](manifests/10-taints-tolerations/README.md) | Isolamento de nodes com liberacao controlada de agendamento |
+| HPA Introdução | [manifests/01-hpa-basic](manifests/01-hpa-basic/README.md) | Entender alvo de CPU/memória e comportamento básico do HPA |
+| HPA Primeiro Exemplo | [manifests/01-hpa-basic](manifests/01-hpa-basic/README.md) | Primeiro cenário prático de HPA com CPU |
+| HPA Scale Up e Scale Down | [manifests/02-hpa-scale-up-down](manifests/02-hpa-scale-up-down/README.md) | Escala horizontal crescente e redução controlada |
+| HPA Métricas por container | [manifests/03-hpa-container-metrics](manifests/03-hpa-container-metrics/README.md) | Recurso avançado: escala baseada apenas no container alvo |
+| Distribuição dos Pods | [manifests/04-pod-distribution](manifests/04-pod-distribution/README.md) | Pods distribuindo de forma previsível entre nodes |
+| `nodeSelector` | [manifests/05-node-selector](manifests/05-node-selector/README.md) | Fixação de Pods em nodes com labels alvo |
+| Labels em Nodes | [manifests/05-node-selector](manifests/05-node-selector/README.md) | Organização de capacidade por rótulos para agendamento |
+| Node Affinity | [required](manifests/06-node-affinity-required/README.md) e [preferred](manifests/07-node-affinity-preferred/README.md) | Regras obrigatórias e preferenciais para direcionamento de Pods |
+| Pod Affinity | [manifests/09-pod-affinity](manifests/09-pod-affinity/README.md) | Co-localização intencional entre workloads |
+| Pod Anti Affinity | [manifests/08-pod-anti-affinity](manifests/08-pod-anti-affinity/README.md) | Separação de réplicas para reduzir risco de falha conjunta |
+| Taints e Tolerations | [manifests/10-taints-tolerations](manifests/10-taints-tolerations/README.md) | Isolamento de nodes com liberação controlada de agendamento |
 | Padrão do Kubernetes | [manifests/11-scheduler-default-behavior](manifests/11-scheduler-default-behavior/README.md) | Entendimento do comportamento default do scheduler |
 
 [Voltar ao índice](#indice)
@@ -216,12 +216,12 @@ flowchart LR
 - Windows 11
 - VS Code
 - WSL2 com Ubuntu
-- Docker Desktop em execucao
+- Docker Desktop em execução
 - `kubectl` instalado e funcional
 - `k3d` ou `kind` instalado
-- GitHub CLI (`gh`) opcional para fluxo de publicacao
+- GitHub CLI (`gh`) opcional para fluxo de publicação
 
-Validacoes iniciais recomendadas:
+Validações iniciais recomendadas:
 
 ```bash
 kubectl version --client
@@ -234,24 +234,24 @@ kind version
 
 ## Como executar o laboratório
 
-Scripts disponiveis em `scripts/`:
+Scripts disponíveis em `scripts/`:
 
 | Script | Finalidade | Quando usar |
 |---|---|---|
-| `setup-cluster-k3d.sh` | Cria/reutiliza cluster `k3d` `resilience-ha-lab` com 1 server e 3 agents | Inicio do laboratorio |
-| `install-metrics-server.sh` | Instala e ajusta o Metrics Server para ambiente local | Antes dos modulos de HPA |
-| `check-cluster.sh` | Valida contexto, nodes, namespaces do lab e metrics API | Checkpoint rapido de ambiente |
-| `apply-all.sh` | Aplica manifests em ordem modular (idempotente) | Deploy dos cenarios |
-| `check-all.sh` | Verifica pods, deployments, services, HPA, labels, taints e eventos | Validacao tecnica dos resultados |
-| `cleanup-all.sh` | Remove recursos do laboratorio sem apagar cluster automaticamente | Reset seguro do ambiente |
-| `capture-evidence.sh` | Captura saidas reais do `kubectl` em `.txt` dentro de `evidence/logs` | Coleta de evidencias para documentacao |
-| `generate-readme-screenshots.sh` | Regera screenshots PNG do README com saidas reais do cluster | Atualizacao visual do portifolio |
+| `setup-cluster-k3d.sh` | Cria/reutiliza cluster `k3d` `resilience-ha-lab` com 1 server e 3 agents | Início do laboratório |
+| `install-metrics-server.sh` | Instala e ajusta o Metrics Server para ambiente local | Antes dos módulos de HPA |
+| `check-cluster.sh` | Valida contexto, nodes, namespaces do lab e metrics API | Checkpoint rápido de ambiente |
+| `apply-all.sh` | Aplica manifests em ordem modular (idempotente) | Deploy dos cenários |
+| `check-all.sh` | Verifica pods, deployments, services, HPA, labels, taints e eventos | Validação técnica dos resultados |
+| `cleanup-all.sh` | Remove recursos do laboratório sem apagar cluster automaticamente | Reset seguro do ambiente |
+| `capture-evidence.sh` | Captura saídas reais do `kubectl` em `.txt` dentro de `evidence/logs` | Coleta de evidências para documentação |
+| `generate-readme-screenshots.sh` | Regera screenshots PNG do README com saídas reais do cluster | Atualização visual do portfólio |
 
-`check-all.sh`, `capture-evidence.sh` e `cleanup-all.sh` consideram por padrao os namespaces `resilience-hpa` e `resilience-scheduling`.
+`check-all.sh`, `capture-evidence.sh` e `cleanup-all.sh` consideram por padrão os namespaces `resilience-hpa` e `resilience-scheduling`.
 
 Fluxo recomendado:
 
-1. Preparar permissao de execucao no WSL2 (quando necessario).
+1. Preparar permissão de execução no WSL2, quando necessário.
 
 ```bash
 chmod +x scripts/*.sh
@@ -275,11 +275,11 @@ chmod +x scripts/*.sh
 ./scripts/check-cluster.sh
 ```
 
-Cluster pronto e saudavel no ambiente local:
+Cluster pronto e saudável no ambiente local:
 
-![Cluster k3d do laboratorio com 3 agents e 1 control-plane](evidence/screenshots/01-cluster-nodes.png)
+![Cluster k3d do laboratório com 3 agents e 1 control-plane](evidence/screenshots/01-cluster-nodes.png)
 
-5. Aplicar todos os manifests do laboratorio.
+5. Aplicar todos os manifests do laboratório.
 
 ```bash
 ./scripts/apply-all.sh
@@ -291,17 +291,17 @@ Cluster pronto e saudavel no ambiente local:
 ./scripts/check-all.sh
 ```
 
-7. Capturar evidencias reais para o repositorio.
+7. Capturar evidências reais para o repositório.
 
 ```bash
 ./scripts/capture-evidence.sh
 ```
 
-Metrics Server ativo e alimentando telemetria para os modulos de HPA:
+Metrics Server ativo e alimentando telemetria para os módulos de HPA:
 
-![Metricas reais do cluster para suporte ao HPA](evidence/screenshots/02-metrics-top-nodes.png)
+![Métricas reais do cluster para suporte ao HPA](evidence/screenshots/02-metrics-top-nodes.png)
 
-8. Limpar recursos do laboratorio (cluster preservado por padrao).
+8. Limpar recursos do laboratório, com o cluster preservado por padrão.
 
 ```bash
 ./scripts/cleanup-all.sh
@@ -317,7 +317,7 @@ Para remover o cluster explicitamente:
 
 ## Como validar os resultados
 
-Comandos de validacao tecnica recomendados:
+Comandos de validação técnica recomendados:
 
 ```bash
 kubectl get hpa -A
@@ -329,36 +329,36 @@ kubectl describe node <nome-do-node>
 kubectl get events -n <namespace> --sort-by=.metadata.creationTimestamp
 ```
 
-Pontos de verificacao:
+Pontos de verificação:
 
-- replicas aumentam e reduzem conforme carga
+- réplicas aumentam e reduzem conforme carga
 - Pods respeitam regras de `nodeSelector` e affinity
-- anti-affinity evita concentracao de replicas no mesmo node
+- anti-affinity evita concentração de réplicas no mesmo node
 - taints bloqueiam agendamento sem toleration correspondente
 
 ### Autoscaling horizontal
 
 Estado base dos HPAs aplicados no namespace `resilience-hpa`:
 
-![Visao geral dos HPAs do laboratorio](evidence/screenshots/03-hpa-basic-overview.png)
+![Visão geral dos HPAs do laboratório](evidence/screenshots/03-hpa-basic-overview.png)
 
-Momento real de scale-up no modulo de carga continua, com aumento de replicas no `hpa-scale-app`:
+Momento real de scale-up no módulo de carga contínua, com aumento de réplicas no `hpa-scale-app`:
 
 ![Scale-up real do HPA com carga aplicada](evidence/screenshots/04-hpa-scale-up.png)
 
-Exemplo de HPA com `ContainerResource`, mostrando a metrica isolada no container principal da aplicacao:
+Exemplo de HPA com `ContainerResource`, mostrando a métrica isolada no container principal da aplicação:
 
-![HPA baseado em metrica por container](evidence/screenshots/05-hpa-container-resource.png)
+![HPA baseado em métrica por container](evidence/screenshots/05-hpa-container-resource.png)
 
-### Scheduling e distribuicao
+### Scheduling e distribuição
 
-Distribuicao de pods no modulo de `topologySpreadConstraints` e distribuicao basica:
+Distribuição de pods no módulo de `topologySpreadConstraints` e distribuição básica:
 
-![Distribuicao de pods entre nodes](evidence/screenshots/06-pod-distribution-wide.png)
+![Distribuição de pods entre nodes](evidence/screenshots/06-pod-distribution-wide.png)
 
-Labels aplicadas nos nodes para direcionar `nodeSelector`, `nodeAffinity` e o cenario de node dedicado:
+Labels aplicadas nos nodes para direcionar `nodeSelector`, `nodeAffinity` e o cenário de node dedicado:
 
-![Labels de nodes usadas pelos modulos de scheduling](evidence/screenshots/07-node-labels.png)
+![Labels de nodes usadas pelos módulos de scheduling](evidence/screenshots/07-node-labels.png)
 
 Pods direcionados corretamente por `nodeSelector`, `requiredDuringSchedulingIgnoredDuringExecution` e `preferredDuringSchedulingIgnoredDuringExecution`:
 
@@ -370,32 +370,32 @@ Comportamento de `podAffinity` e `podAntiAffinity` observado no cluster real:
 
 Validação de `taints` e `tolerations`, com um pod agendado no node dedicado e outro bloqueado por `untolerated taint`:
 
-![Evidencia real de taints e tolerations](evidence/screenshots/10-taints-and-tolerations.png)
+![Evidência real de taints e tolerations](evidence/screenshots/10-taints-and-tolerations.png)
 
 [Voltar ao índice](#indice)
 
 ## Evidências e qualidade
 
-Este laboratorio foi pensado para ser publicado com evidencias reais e verificaveis. As imagens deste `README` foram regeneradas a partir de saidas reais do cluster `k3d-resilience-ha-lab`, com foco nos cenarios efetivamente implementados neste repositorio: HPA, distribuicao de pods, `nodeSelector`, affinities, `taints` e `tolerations`.
+Este laboratório foi pensado para ser publicado com evidências reais e verificáveis. As imagens deste `README` foram regeneradas a partir de saídas reais do cluster `k3d-resilience-ha-lab`, com foco nos cenários efetivamente implementados neste repositório: HPA, distribuição de pods, `nodeSelector`, affinities, `taints` e `tolerations`.
 
-O pipeline de qualidade no GitHub Actions complementa essas evidencias de execucao com validacao continua de YAML e scripts shell:
+O pipeline de qualidade no GitHub Actions complementa essas evidências de execução com validação contínua de YAML e scripts shell:
 
 ### Validação contínua no GitHub Actions
 
-![Execucao bem-sucedida do workflow Validate Kubernetes YAML](evidence/screenshots/11-github-actions-yaml-validation.png)
+![Execução bem-sucedida do workflow Validate Kubernetes YAML](evidence/screenshots/11-github-actions-yaml-validation.png)
 
 Esse print confirma:
 
 - workflow `Validate Kubernetes YAML` executando na branch `main`
-- validacao de YAML com `yamllint`
-- validacao de scripts shell no pipeline
+- validação de YAML com `yamllint`
+- validação de scripts shell no pipeline
 - rastreabilidade entre commit, workflow e resultado final
 
-Para gerar as demais evidencias corretas deste laboratorio, use os guias abaixo:
+Para gerar as demais evidências corretas deste laboratório, use os guias abaixo:
 
-- [Guia de evidencias](evidence/README.md)
-- [Guia de documentacao tecnica](docs/README.md)
-- [Guia de coleta de evidencias](docs/EVIDENCE_GUIDE.md)
+- [Guia de evidências](evidence/README.md)
+- [Guia de documentação técnica](docs/README.md)
+- [Guia de coleta de evidências](docs/EVIDENCE_GUIDE.md)
 - [Guia completo de troubleshooting](docs/TROUBLESHOOTING.md)
 
 [Voltar ao índice](#indice)
@@ -404,7 +404,7 @@ Para gerar as demais evidencias corretas deste laboratorio, use os guias abaixo:
 
 Guia detalhado: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
-Problema: `kubectl` nao conecta no cluster.
+Problema: `kubectl` não conecta no cluster.
 
 - Verificar contexto atual:
 
@@ -413,7 +413,7 @@ kubectl config current-context
 kubectl config get-contexts
 ```
 
-Problema: HPA nao escala.
+Problema: HPA não escala.
 
 - Confirmar metrics server e requests/limits definidos no workload:
 
@@ -423,7 +423,7 @@ kubectl describe hpa <nome-do-hpa> -n <namespace>
 kubectl describe deployment <nome-deployment> -n <namespace>
 ```
 
-Problema: Pod nao agenda no node esperado.
+Problema: Pod não agenda no node esperado.
 
 - Inspecionar labels, taints e eventos do Pod:
 
@@ -437,34 +437,36 @@ kubectl describe pod <nome-do-pod> -n <namespace>
 
 ## Por que este projeto é relevante para recrutadores?
 
-Este repositorio demonstra, de forma pratica e verificavel:
+Mais do que listar conceitos de Kubernetes, este laboratório comunica maturidade de execução. Ele mostra alguém que não apenas conhece os objetos da plataforma, mas consegue organizar um ambiente de teste coerente, criar cenários comparáveis, observar comportamento real do cluster e transformar isso em evidência técnica legível.
 
-- raciocinio de infraestrutura ao definir regras de agendamento e escalabilidade
-- troubleshooting orientado a causa raiz com leitura de eventos e estado do cluster
-- automacao inicial com scripts e organizacao de modulos
-- documentacao tecnica clara para transferencia de conhecimento
-- boas praticas de padronizacao, rastreabilidade e revisao
-- capacidade de transformar estudo em projeto real, com entregavel reprodutivel
+De forma sutil, este projeto sinaliza competências que costumam importar muito em contexto profissional:
+
+- capacidade de estruturar experimentos técnicos com propósito claro
+- cuidado com validação, rastreabilidade e documentação de qualidade
+- leitura de comportamento de infraestrutura a partir de métricas, eventos e estado do scheduler
+- preocupação com reprodutibilidade, automação e transferência de conhecimento
+
+Em outras palavras, o repositório não tenta apenas “mostrar Kubernetes”; ele evidencia forma de pensar, critério técnico e disciplina de engenharia.
 
 [Voltar ao índice](#indice)
 
 ## Como este projeto se conecta com ambientes reais
 
-Os mesmos conceitos aplicados aqui aparecem em producao quando times precisam:
+Os mesmos conceitos aplicados aqui aparecem em produção quando times precisam:
 
-- reduzir indisponibilidade por concentracao de replicas
+- reduzir indisponibilidade por concentração de réplicas
 - controlar custo sem perder capacidade de resposta
-- isolar workloads sensiveis em nodes dedicados
-- padronizar troubleshooting entre desenvolvimento e operacao
-- evoluir de deploy basico para plataforma mais resiliente
+- isolar workloads sensíveis em nodes dedicados
+- padronizar troubleshooting entre desenvolvimento e operação
+- evoluir de deploy básico para plataforma mais resiliente
 
 [Voltar ao índice](#indice)
 
 ## Próximos passos
 
-1. Executar todos os modulos em cluster local e preencher `evidence/logs` com outputs reais.
-2. Expandir o laboratorio com variante de setup para `kind`.
-3. Adicionar um modulo extra com HPA baseado em metrica customizada (Prometheus Adapter).
+1. Executar todos os módulos em cluster local e preencher `evidence/logs` com outputs reais.
+2. Expandir o laboratório com variante de setup para `kind`.
+3. Adicionar um módulo extra com HPA baseado em métrica customizada (Prometheus Adapter).
 4. Evoluir o CI com checagem de links quebrados no `README.md`.
 
 [Voltar ao índice](#indice)
