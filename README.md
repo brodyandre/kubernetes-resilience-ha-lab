@@ -9,6 +9,27 @@ _Laboratório prático de autoscaling, scheduling avançado e controle de distri
 ![Status: Learning Lab](https://img.shields.io/badge/Status-Learning%20Lab-2ea44f?style=for-the-badge)
 [![Validate Kubernetes YAML](https://img.shields.io/badge/Workflow-Validate%20Kubernetes%20YAML-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](.github/workflows/validate-kubernetes-yaml.yml)
 
+<a id="indice"></a>
+
+## Índice remissivo
+
+- [Visão geral](#visão-geral)
+- [Problema que este laboratório resolve](#problema-que-este-laboratório-resolve)
+- [Habilidades demonstradas](#habilidades-demonstradas)
+- [Arquitetura do laboratório](#arquitetura-do-laboratório)
+- [Diagramas do laboratório](#diagramas-do-laboratório)
+- [Tópicos abordados](#tópicos-abordados)
+- [Estrutura do repositório](#estrutura-do-repositório)
+- [Pré-requisitos](#pré-requisitos)
+- [Como executar o laboratório](#como-executar-o-laboratório)
+- [Como validar os resultados](#como-validar-os-resultados)
+- [Evidências e qualidade](#evidências-e-qualidade)
+- [Troubleshooting](#troubleshooting)
+- [Por que este projeto é relevante para recrutadores?](#por-que-este-projeto-é-relevante-para-recrutadores)
+- [Como este projeto se conecta com ambientes reais](#como-este-projeto-se-conecta-com-ambientes-reais)
+- [Próximos passos](#próximos-passos)
+- [Autor](#autor)
+
 ## Visão geral
 
 Este repositorio foi estruturado como laboratorio pratico para estudar e demonstrar resiliencia e alta disponibilidade em Kubernetes com foco em:
@@ -19,6 +40,8 @@ Este repositorio foi estruturado como laboratorio pratico para estudar e demonst
 - boas praticas de operacao e validacao com `kubectl`
 
 O objetivo e transformar estudo tecnico em projeto de portifolio com rastreabilidade, evidencias reais e documentacao profissional.
+
+[Voltar ao índice](#indice)
 
 ## Problema que este laboratório resolve
 
@@ -31,6 +54,8 @@ Em muitos ambientes, aplicacoes falham nao por falta de containers, mas por:
 
 Este laboratorio resolve esse gap com cenarios praticos reproduziveis que mostram como projetar workloads mais resilientes desde o ambiente de estudo.
 
+[Voltar ao índice](#indice)
+
 ## Habilidades demonstradas
 
 - modelagem de workloads com foco em disponibilidade
@@ -41,6 +66,8 @@ Este laboratorio resolve esse gap com cenarios praticos reproduziveis que mostra
 - controle de agendamento com taints e tolerations
 - validacao tecnica com comandos `kubectl`
 - organizacao de evidencias e documentacao orientada a times tecnicos e nao tecnicos
+
+[Voltar ao índice](#indice)
 
 ## Arquitetura do laboratório
 
@@ -62,6 +89,8 @@ Modelo de distribuicao:
 
 - 1 node de controle (ou equivalente gerenciado pelo runtime local)
 - 2 ou mais nodes de trabalho para testar regras de distribuicao e afinidade
+
+[Voltar ao índice](#indice)
 
 ## Diagramas do laboratório
 
@@ -143,6 +172,8 @@ flowchart LR
   N3 --> PODS
 ```
 
+[Voltar ao índice](#indice)
+
 ## Tópicos abordados
 
 | Topico de estudo | Modulo pratico sugerido | Resultado principal esperado |
@@ -160,6 +191,8 @@ flowchart LR
 | Taints e Tolerations | [manifests/10-taints-tolerations](manifests/10-taints-tolerations/README.md) | Isolamento de nodes com liberacao controlada de agendamento |
 | Padrão do Kubernetes | [manifests/11-scheduler-default-behavior](manifests/11-scheduler-default-behavior/README.md) | Entendimento do comportamento default do scheduler |
 
+[Voltar ao índice](#indice)
+
 ## Estrutura do repositório
 
 ```text
@@ -175,6 +208,8 @@ flowchart LR
 |-- diagrams/
 `-- .github/workflows/
 ```
+
+[Voltar ao índice](#indice)
 
 ## Pré-requisitos
 
@@ -194,6 +229,8 @@ docker version
 k3d version
 kind version
 ```
+
+[Voltar ao índice](#indice)
 
 ## Como executar o laboratório
 
@@ -267,6 +304,8 @@ Para remover o cluster explicitamente:
 ./scripts/cleanup-all.sh --delete-cluster
 ```
 
+[Voltar ao índice](#indice)
+
 ## Como validar os resultados
 
 Comandos de validacao tecnica recomendados:
@@ -288,20 +327,33 @@ Pontos de verificacao:
 - anti-affinity evita concentracao de replicas no mesmo node
 - taints bloqueiam agendamento sem toleration correspondente
 
-## Evidências esperadas
+[Voltar ao índice](#indice)
 
-As evidencias devem ser reais e coletadas manualmente apos execucao:
+## Evidências e qualidade
 
-- screenshots de estado de HPA e distribuicao de Pods
-- logs de comandos `kubectl` relevantes para cada modulo
-- eventos de scheduler para justificar comportamento observado
+Este laboratorio foi pensado para ser publicado com evidencias reais e verificaveis. Para manter a documentacao coerente com o conteudo tecnico do repositorio, as imagens embutidas no `README` devem refletir exclusivamente os cenarios de HPA, scheduling, affinity, taints e tolerations descritos neste projeto.
 
-Referencias:
+No estado atual, a evidencia visual validada e aderente ao repositorio e a execucao bem-sucedida do pipeline de qualidade no GitHub Actions:
+
+### Validação contínua no GitHub Actions
+
+![Execucao bem-sucedida do workflow Validate Kubernetes YAML](evidence/screenshots/10-github-actions-yaml-validation.png)
+
+Esse print confirma:
+
+- workflow `Validate Kubernetes YAML` executando na branch `main`
+- validacao de YAML com `yamllint`
+- validacao de scripts shell no pipeline
+- rastreabilidade entre commit, workflow e resultado final
+
+Para gerar as demais evidencias corretas deste laboratorio, use os guias abaixo:
 
 - [Guia de evidencias](evidence/README.md)
 - [Guia de documentacao tecnica](docs/README.md)
 - [Guia de coleta de evidencias](docs/EVIDENCE_GUIDE.md)
 - [Guia completo de troubleshooting](docs/TROUBLESHOOTING.md)
+
+[Voltar ao índice](#indice)
 
 ## Troubleshooting
 
@@ -336,6 +388,8 @@ kubectl describe node <nome-do-node>
 kubectl describe pod <nome-do-pod> -n <namespace>
 ```
 
+[Voltar ao índice](#indice)
+
 ## Por que este projeto é relevante para recrutadores?
 
 Este repositorio demonstra, de forma pratica e verificavel:
@@ -347,6 +401,8 @@ Este repositorio demonstra, de forma pratica e verificavel:
 - boas praticas de padronizacao, rastreabilidade e revisao
 - capacidade de transformar estudo em projeto real, com entregavel reprodutivel
 
+[Voltar ao índice](#indice)
+
 ## Como este projeto se conecta com ambientes reais
 
 Os mesmos conceitos aplicados aqui aparecem em producao quando times precisam:
@@ -357,16 +413,21 @@ Os mesmos conceitos aplicados aqui aparecem em producao quando times precisam:
 - padronizar troubleshooting entre desenvolvimento e operacao
 - evoluir de deploy basico para plataforma mais resiliente
 
+[Voltar ao índice](#indice)
+
 ## Próximos passos
 
 1. Executar todos os modulos em cluster local e preencher `evidence/logs` com outputs reais.
-2. Ajustar a secao `Autor` com dados reais para publicacao no GitHub.
-3. Expandir o laboratorio com variante de setup para `kind`.
-4. Adicionar um modulo extra com HPA baseado em metrica customizada (Prometheus Adapter).
-5. Evoluir o CI com checagem de links quebrados no `README.md`.
+2. Expandir o laboratorio com variante de setup para `kind`.
+3. Adicionar um modulo extra com HPA baseado em metrica customizada (Prometheus Adapter).
+4. Evoluir o CI com checagem de links quebrados no `README.md`.
+
+[Voltar ao índice](#indice)
 
 ## Autor
 
-Seu Nome  
-LinkedIn: `https://www.linkedin.com/in/seu-perfil`  
-GitHub: `https://github.com/seu-usuario`
+Luiz André de Souza  
+LinkedIn: `https://www.linkedin.com/in/luiz-andre-souza-data-engineer/`  
+GitHub: `https://github.com/brodyandre`
+
+[Voltar ao índice](#indice)
