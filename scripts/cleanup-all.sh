@@ -38,7 +38,7 @@ delete_dir() {
 
   info "Removendo recursos definidos em: ${dir}"
   for file in "${files[@]}"; do
-    info "kubectl delete -f ${file#${REPO_ROOT}/} --ignore-not-found=true"
+    info "kubectl delete -f ${file#"${REPO_ROOT}"/} --ignore-not-found=true"
     kubectl delete -f "${file}" --ignore-not-found=true
     DELETED_COUNT=$((DELETED_COUNT + 1))
   done
@@ -74,7 +74,7 @@ if [[ -d "${MANIFESTS_DIR}" && "${DELETED_COUNT}" -eq 0 ]]; then
   warn "Estrutura modular nao encontrada. Removendo todos os YAMLs de manifests/."
   mapfile -t all_files < <(find "${MANIFESTS_DIR}" -type f \( -name '*.yaml' -o -name '*.yml' \) | sort)
   for file in "${all_files[@]}"; do
-    info "kubectl delete -f ${file#${REPO_ROOT}/} --ignore-not-found=true"
+    info "kubectl delete -f ${file#"${REPO_ROOT}"/} --ignore-not-found=true"
     kubectl delete -f "${file}" --ignore-not-found=true
     DELETED_COUNT=$((DELETED_COUNT + 1))
   done

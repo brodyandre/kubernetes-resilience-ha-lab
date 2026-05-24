@@ -42,13 +42,13 @@ apply_dir() {
   done
 
   for file in "${namespace_files[@]}"; do
-    info "kubectl apply -f ${file#${REPO_ROOT}/}"
+    info "kubectl apply -f ${file#"${REPO_ROOT}"/}"
     kubectl apply -f "${file}"
     APPLIED_COUNT=$((APPLIED_COUNT + 1))
   done
 
   for file in "${regular_files[@]}"; do
-    info "kubectl apply -f ${file#${REPO_ROOT}/}"
+    info "kubectl apply -f ${file#"${REPO_ROOT}"/}"
     kubectl apply -f "${file}"
     APPLIED_COUNT=$((APPLIED_COUNT + 1))
   done
@@ -90,7 +90,7 @@ if [[ "${APPLIED_COUNT}" -eq 0 ]]; then
   warn "Nenhum arquivo aplicado na estrutura modular padrao. Aplicando YAMLs encontrados em manifests/."
   mapfile -t all_files < <(find "${MANIFESTS_DIR}" -type f \( -name '*.yaml' -o -name '*.yml' \) | sort)
   for file in "${all_files[@]}"; do
-    info "kubectl apply -f ${file#${REPO_ROOT}/}"
+    info "kubectl apply -f ${file#"${REPO_ROOT}"/}"
     kubectl apply -f "${file}"
     APPLIED_COUNT=$((APPLIED_COUNT + 1))
   done

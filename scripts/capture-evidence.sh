@@ -24,7 +24,7 @@ capture_cmd() {
   shift
   local file_path="${EVIDENCE_DIR}/${TIMESTAMP}-${file_suffix}.txt"
 
-  info "Capturando evidencias em: ${file_path#${REPO_ROOT}/}"
+  info "Capturando evidencias em: ${file_path#"${REPO_ROOT}"/}"
   {
     printf '# captured_at: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
     printf '# command: %s\n\n' "$*"
