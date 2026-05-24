@@ -1,6 +1,6 @@
 # Kubernetes Resilience & High Availability Lab
 
-_Laboratório prático de autoscaling, scheduling avançado e controle de distribuição de Pods em Kubernetes._
+_Projeto de portfólio orientado a evidências para estudar autoscaling, scheduling e alta disponibilidade em Kubernetes._
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -8,6 +8,10 @@ _Laboratório prático de autoscaling, scheduling avançado e controle de distri
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Status: Learning Lab](https://img.shields.io/badge/Status-Learning%20Lab-2ea44f?style=for-the-badge)
 [![Validate Kubernetes YAML](https://img.shields.io/badge/Workflow-Validate%20Kubernetes%20YAML-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](.github/workflows/validate-kubernetes-yaml.yml)
+
+Este laboratório foi construído para mostrar, de forma prática e verificável, como decisões de autoscaling e scheduling impactam resiliência, previsibilidade operacional e qualidade de execução em Kubernetes.
+
+Mais do que reunir manifests, a proposta aqui é transformar estudo técnico em evidência de engenharia: cenário reproduzível, comandos de validação, screenshots reais e documentação pensada para leitura profissional.
 
 <a id="indice"></a>
 
@@ -32,14 +36,14 @@ _Laboratório prático de autoscaling, scheduling avançado e controle de distri
 
 ## Visão geral
 
-Este repositório foi estruturado como laboratório prático para estudar e demonstrar resiliência e alta disponibilidade em Kubernetes com foco em:
+Este repositório foi estruturado como um laboratório prático para estudar e demonstrar resiliência e alta disponibilidade em Kubernetes com foco em:
 
 - autoscaling horizontal orientado a métricas
 - comportamento do scheduler em cenários reais
 - distribuição inteligente de Pods entre nodes
 - boas práticas de operação e validação com `kubectl`
 
-O objetivo é transformar estudo técnico em projeto de portfólio com rastreabilidade, evidências reais e documentação profissional.
+O objetivo é transformar aprendizado técnico em um projeto de portfólio com rastreabilidade, evidências reais e documentação profissional.
 
 [Voltar ao índice](#indice)
 
@@ -468,6 +472,8 @@ Os mesmos conceitos aplicados aqui aparecem em produção quando times precisam:
 2. Expandir o laboratório com variante de setup para `kind`.
 3. Adicionar um módulo extra com HPA baseado em métrica customizada (Prometheus Adapter).
 4. Evoluir o CI com checagem de links quebrados no `README.md`.
+
+Como portfólio, este repositório foi desenhado para ser lido em camadas: primeiro pela clareza da proposta, depois pela qualidade da execução e, por fim, pela consistência entre código, evidências e documentação. Esse é o tipo de detalhe que costuma diferenciar um estudo isolado de um entregável com cara de engenharia real.
 
 [Voltar ao índice](#indice)
 
